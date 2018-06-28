@@ -1,4 +1,4 @@
-# Web Push Notification Sample
+# Understand Web Push Notification
 
 ## Under the hood
 
@@ -44,3 +44,18 @@
 4. Subscribe a user with PushManager
 
     ![Application server key](https://developers.google.com/web/fundamentals/push-notifications/images/svgs/application-server-key-subscribe.svg)
+
+5. Sending message to Push service
+
+    - Web Push Protocol
+    ![Web Push Protocol](https://developers.google.com/web/fundamentals/push-notifications/images/svgs/application-server-key-send.svg)
+
+6. Handling Push event & display Notification
+
+    ```js
+    self.addEventListener('push', function(event) {
+        const notifPromise = self.registration.showNotification('Hello, World.');
+
+        event.waitUntil(notifPromise);
+    });
+    ```
