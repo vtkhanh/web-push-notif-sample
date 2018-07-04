@@ -12,7 +12,7 @@ namespace WebPush.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View("Push");
         }
 
         public IActionResult About()

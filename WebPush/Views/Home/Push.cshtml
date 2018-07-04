@@ -1,10 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Push Notification Demo";
-}
-<h2>@ViewData["Title"]</h2>
+﻿@{ ViewData["Title"] = "Push Notification Demo"; }
 
+<header>
+    <h2>@ViewData["Title"]</h2>
+</header>
 
-<button id="push-btn" type="button" class="btn btn-primary">Push now!</button>
+<main>
+    <p>
+        <button id="push-btn" type="button" class="btn btn-primary">Push now!</button>
+    </p>
+
+    <section class="subscription-details js-subscription-details is-invisible">
+        <p>Once you've subscribed your user, you'd send their subscription to your server to store in a database so that when you want to send a message you can lookup the subscription and send a message to it.</p>
+        <pre class="js-subscription-json"></pre>
+    </section>
+</main>
 
 @section Scripts {
     <script src="~/js/push.js" asp-append-version="true"></script>
