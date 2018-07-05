@@ -60,3 +60,9 @@
         event.waitUntil(notifPromise);
     });
     ```
+
+## References
+
+- [Service worker](https://developers.google.com/web/fundamentals/primers/service-workers/)
+- [Web Push Protocol](https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol)
+- [Web Push library for .NET](https://github.com/web-push-libs/web-push-csharp)
