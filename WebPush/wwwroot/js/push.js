@@ -61,12 +61,12 @@
                 return response.json();
             })
             .then(function (data) {
-                const applicationServerKey = urlB64ToUint8Array(data.key);
+                const serverPublicKey = urlB64ToUint8Array(data.key);
 
                 // STEP 3: Ask permission and subcribe users with Push Service
                 return swRegistration.pushManager.subscribe({
                     userVisibleOnly: true, // REQUIRED!
-                    applicationServerKey: applicationServerKey
+                    applicationServerKey: serverPublicKey
                 });
             })
             .then(function (subscription) {
@@ -146,9 +146,13 @@
 
 function pushMessage() {
     const form = $('#push-message-form');
+    const payload = {
+        title: form.find('#title').val(),
+        message: form.find('#message').val()
+    }
     const params = {
         Subscription: JSON.parse(form.find('#subscription').val()),
-        Message: form.find('#message').val()
+        Payload: JSON.stringify(payload)
     };
     const option = {
         url: '/api/Notification/PushMessage',

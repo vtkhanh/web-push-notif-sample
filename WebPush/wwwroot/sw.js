@@ -1,20 +1,18 @@
+// STEP 6: Handle Push event and show notification
 self.addEventListener('push', function (event) {
     if (!(self.Notification && self.Notification.permission === 'granted')) {
         return;
     }
 
-    // let data = {};
-    // if (event.data) {
-    //     data = event.data.json();
-    // }
+    let data = {};
+    if (event.data) {
+        data = event.data.json();
+    }
 
-    console.log('[Service Worker] Notification Recieved:');
-    // console.log(data);
-
-    const title = "Demo";
+    const title = data.title;
     const options = {
-        body: "hello world",
-        icon: 'images/icon.png'
+        body: data.message,
+        icon: 'images/logo.png'
     };
 
     const notifPromise = self.registration.showNotification(title, options);

@@ -3,6 +3,7 @@
 ## Under the hood
 
 - Service worker
+- Push service
 
 ## How web-push-notification work
 
@@ -18,7 +19,7 @@
 
     ![Push event to device](https://developers.google.com/web/fundamentals/push-notifications/images/svgs/push-service-to-sw-event.svg)
 
-## Subscribing a user
+## Step by Step
 
 1. Detect browser support
 

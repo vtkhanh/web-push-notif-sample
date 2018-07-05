@@ -4,9 +4,6 @@ namespace WebPush.Models
     {
         public Subscription Subscription { get; set; }
 
-        public string Title { get; set; }
-
-        public string Message { get; set; }
-
+        public string Payload {get; set;}
     }
 }
