@@ -11,3 +11,13 @@ self.addEventListener('push', function (event) {
     const notifPromise = self.registration.showNotification(title, options);
     event.waitUntil(notifPromise);
 });
+
+self.addEventListener('notificationclick', function (event) {
+    console.log('[Service Worker] Notification click Received.');
+
+    event.notification.close();
+
+    event.waitUntil(
+        clients.openWindow('https://arp.amaris.com/')
+    );
+});

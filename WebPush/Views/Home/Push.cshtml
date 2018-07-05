@@ -6,15 +6,27 @@
 
 <main>
     <p>
-        <button id="push-btn" type="button" class="btn btn-primary">Push now!</button>
+        <button id="toggle-btn" type="button" class="btn btn-primary">Push now!</button>
     </p>
 
     <section class="subscription-details js-subscription-details is-invisible">
-        <p>Once you've subscribed your user, you'd send their subscription to your server to store in a database so that when you want to send a message you can lookup the subscription and send a message to it.</p>
+        <p>Once you've subscribed your user, you'd send their subscription to your server to store in a database so that when
+            you want to send a message you can lookup the subscription and send a message to it.</p>
         <pre class="js-subscription-json"></pre>
+
+        <form id="push-message-form">
+            <input type="hidden" id="subscription">
+            <div class="form-group">
+                <label for="message" class="form-label">Message to send</label>
+                <textarea name="message" id="message" class="form-control" placeholder="Something to send here"></textarea>
+            </div>
+            
+            <button type="button" class="btn btn-primary" onclick="sendPushMessage()">Submit</button>
+        </form>
     </section>
+
 </main>
 
 @section Scripts {
-    <script src="~/js/push.js" asp-append-version="true"></script>
+<script src="~/js/push.js" asp-append-version="true"></script>
 }
