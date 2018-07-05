@@ -1,10 +1,19 @@
 self.addEventListener('push', function (event) {
-    console.log('[Service Worker] Push Received.');
-    console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+    if (!(self.Notification && self.Notification.permission === 'granted')) {
+        return;
+    }
 
-    const title = 'Push Notificatiom Demo';
+    // let data = {};
+    // if (event.data) {
+    //     data = event.data.json();
+    // }
+
+    console.log('[Service Worker] Notification Recieved:');
+    // console.log(data);
+
+    const title = "Demo";
     const options = {
-        body: 'Hello world!',
+        body: "hello world",
         icon: 'images/icon.png'
     };
 

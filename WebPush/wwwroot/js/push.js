@@ -1,8 +1,6 @@
 (function ($) {
     'use strict';
 
-    // const applicationServerPublicKey = 'BKbEctP-oHIbbz5IyXHTufRb5mAfERX0rDyOvFsnKBEL7saOkdWg9f1ez-DD1L4uL0I3aoisPKP8pQ62OdlIh00';
-    //const privateKey = 'mmdCLR1eYKs9ofRIOUsiBmvN_390FtFMl8oN0SdTtnU';
     let swRegistration = null;
     let isSubscribed = false;
     const toggleButton = $('#toggle-btn');
@@ -123,13 +121,21 @@
     function updateSubscriptionOnServer(subscription) {
 
         // TODO: Send subscription to application server
-        $('#subscription').val(JSON.stringify(subscription));
 
         const subscriptionJson = $('.js-subscription-json');
         const subscriptionDetails = $('.js-subscription-details');
 
         if (subscription) {
-            subscriptionJson.text(JSON.stringify(subscription, null, 4));
+            const userSubscription = {
+                endpoint: subscription.endpoint,
+                keys: {
+                    p256dh: base64Encode(subscription.getKey('p256dh')),
+                    auth: base64Encode(subscription.getKey('auth'))
+                }
+            };
+            $('#subscription').val(JSON.stringify(userSubscription));
+
+            subscriptionJson.text(JSON.stringify(userSubscription, null, 4));
             subscriptionDetails.removeClass('is-invisible');
         } else {
             subscriptionDetails.addClass('is-invisible');
@@ -138,10 +144,10 @@
 
 })(jQuery);
 
-function sendPushMessage() {
+function pushMessage() {
     const form = $('#push-message-form');
     const params = {
-        Subscription: form.find('#subscription').val(),
+        Subscription: JSON.parse(form.find('#subscription').val()),
         Message: form.find('#message').val()
     };
     const option = {

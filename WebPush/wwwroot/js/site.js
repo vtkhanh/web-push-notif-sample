@@ -12,3 +12,7 @@ function urlB64ToUint8Array(base64String) {
     }
     return outputArray;
 }
+
+function base64Encode(arrayBuffer) {
+    return btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+}

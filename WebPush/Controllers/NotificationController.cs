@@ -14,20 +14,20 @@ namespace WebPush.Controllers
     {
         private readonly string _publicKey;
         private readonly string _privateKey;
-        private readonly VapidDetails _vapidDetails;
 
         public NotificationController(IConfiguration configuration)
         {
-            _publicKey = configuration["VapidKeys:PublicKey"];
-            _privateKey = configuration["VapidKeys:PrivateKey"];
-            _vapidDetails = new VapidDetails("mailto:kvu@amaris.com", _publicKey, _privateKey);
+            VapidDetails vapidKeys = VapidHelper.GenerateVapidKeys();
+            _publicKey = vapidKeys.PublicKey;
+            _privateKey = vapidKeys.PrivateKey;
         }
 
         [Route("ServerPublicKey")]
         [HttpGet()]
         public JsonResult ServerPublicKey()
         {
-            var result = new {
+            var result = new
+            {
                 key = _publicKey
             };
             return Json(result);
@@ -37,7 +37,20 @@ namespace WebPush.Controllers
         [HttpPost()]
         public JsonResult PushMessage(PushMessageRequest request)
         {
-            return Json(new { request.Subscription, request.Message });
+            try
+            {
+                var webPushClient = new WebPushClient();
+                var subscription = new PushSubscription(request.Subscription.Endpoint,
+                    request.Subscription.Keys.P256dh, request.Subscription.Keys.Auth);
+                var vapidDetails = new VapidDetails("mailto:example@example.com", _publicKey, _privateKey);
+
+                webPushClient.SendNotification(subscription, request.Message, vapidDetails);
+            }
+            catch (WebPushException exception)
+            {
+                return Json(new { Ok = false, Error = $"HTTP status code: {exception.StatusCode}" });
+            }
+            return Json(new { Ok = true });
         }
     }
 }
