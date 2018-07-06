@@ -144,18 +144,19 @@
 
 })(jQuery);
 
-function pushMessage() {
+function pushMessage({ url, withActions = false }) {
     const form = $('#push-message-form');
     const payload = {
         title: form.find('#title').val(),
-        message: form.find('#message').val()
+        message: form.find('#message').val(),
+        withActions: withActions
     }
     const params = {
         Subscription: JSON.parse(form.find('#subscription').val()),
         Payload: JSON.stringify(payload)
     };
     const option = {
-        url: '/api/Notification/PushMessage',
+        url: url,
         data: JSON.stringify(params),
         contentType: 'application/json'
     }

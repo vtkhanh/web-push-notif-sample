@@ -12,8 +12,25 @@ self.addEventListener('push', function (event) {
     const title = data.title;
     const options = {
         body: data.message,
-        icon: 'images/logo.png'
+        icon: 'images/logo.png',
+        requireInteraction: true
     };
+
+    if (data.withActions) {
+        options.actions = [
+            {
+                action: 'facebook',
+                title: "Let's facebook",
+                icon: 'images/fb.png'
+            },
+            {
+                action: 'twitter',
+                title: "Let's twitter",
+                icon: 'images/twitter.png'
+            }
+        ];
+    }
+
 
     const notifPromise = self.registration.showNotification(title, options);
     event.waitUntil(notifPromise);
@@ -24,7 +41,20 @@ self.addEventListener('notificationclick', function (event) {
 
     event.notification.close();
 
+    let url = null;
+    switch (event.action) {
+        case 'facebook':
+            url = 'https://www.facebook.com';
+            break;
+        case 'twitter':
+            url = 'https://www.twitter.com';
+            break;
+        default:
+            url = 'https://arp.amaris.com/';
+            break;
+    }
+
     event.waitUntil(
-        clients.openWindow('https://arp.amaris.com/')
+        clients.openWindow(url)
     );
 });

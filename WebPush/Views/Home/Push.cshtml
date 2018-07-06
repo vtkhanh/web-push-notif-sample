@@ -24,8 +24,9 @@
                 <label for="message" class="form-label">Message</label>
                 <textarea name="message" id="message" class="form-control" placeholder="Something to send here"></textarea>
             </div>
-            
-            <button type="button" class="btn btn-primary" onclick="pushMessage()">Send</button>
+
+            <button type="button" class="btn btn-primary" onclick="pushMessage({ url: '@Url.RouteUrl("PushMessage")' })">Send</button>
+            <button type="button" class="btn btn-primary" onclick="pushMessage({ url: '@Url.RouteUrl("PushMessage")', withActions: true })">Send + Actions</button>
         </form>
     </section>
 

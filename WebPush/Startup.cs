@@ -32,8 +32,7 @@ namespace WebPush
             });
 
 
-            services.AddMvc();
-            //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,10 +57,6 @@ namespace WebPush
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                routes.MapRoute(
-                    name: "api",
-                    template: "api/{controller=Notification}"
-                );
             });
         }
     }

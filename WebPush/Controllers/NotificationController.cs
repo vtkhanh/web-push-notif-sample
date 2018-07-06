@@ -14,21 +14,23 @@ namespace WebPush.Controllers
     {
         private readonly string _publicKey;
         private readonly string _privateKey;
+        private readonly VapidDetails _vapidDetails;
 
         public NotificationController(IConfiguration configuration)
         {
             _publicKey = configuration["VapidKeys:PublicKey"];
             _privateKey = configuration["VapidKeys:PrivateKey"];
+            _vapidDetails = new VapidDetails("mailto:kvu@amaris.com", _publicKey, _privateKey);
         }
 
-        [Route("ServerPublicKey")]
+        [Route(nameof(ServerPublicKey))]
         [HttpGet()]
         public JsonResult ServerPublicKey()
         {
             return Json(new { key = _publicKey });
         }
 
-        [Route("PushMessage")]
+        [Route(nameof(PushMessage), Name = nameof(PushMessage))]
         [HttpPost()]
         public JsonResult PushMessage(PushMessageRequest request)
         {
@@ -37,10 +39,9 @@ namespace WebPush.Controllers
                 var webPushClient = new WebPushClient();
                 var subscription = new PushSubscription(request.Subscription.Endpoint,
                     request.Subscription.Keys.P256dh, request.Subscription.Keys.Auth);
-                var vapidDetails = new VapidDetails("mailto:kvu@amaris.com", _publicKey, _privateKey);
 
                 // STEP 5: Send PushMessage to Push Service
-                webPushClient.SendNotification(subscription, request.Payload, vapidDetails);
+                webPushClient.SendNotification(subscription, request.Payload, _vapidDetails);
             }
             catch (WebPushException exception)
             {
