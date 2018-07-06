@@ -63,7 +63,7 @@
             .then(function (data) {
                 const serverPublicKey = urlB64ToUint8Array(data.key);
 
-                // STEP 3: Ask permission and subcribe users with Push Service
+                // STEP 3: Ask permission and subscribe users with Push Service
                 return swRegistration.pushManager.subscribe({
                     userVisibleOnly: true, // REQUIRED!
                     applicationServerKey: serverPublicKey

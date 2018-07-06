@@ -46,12 +46,11 @@
 
     ![Application server key](https://developers.google.com/web/fundamentals/push-notifications/images/svgs/application-server-key-subscribe.svg)
 
-5. Sending message to Push service
+5. Send message to Push service
 
-    - Web Push Protocol
     ![Web Push Protocol](https://developers.google.com/web/fundamentals/push-notifications/images/svgs/application-server-key-send.svg)
 
-6. Handling Push event & display Notification
+6. Handle Push event & display Notification
 
     ```js
     self.addEventListener('push', function(event) {
